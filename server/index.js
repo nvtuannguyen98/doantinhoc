@@ -5,12 +5,6 @@ const path = require('path');
 const hbs = require('hbs');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-// var mysql= require('mysql');
-// var con = mysql.createConnection({
-//   host: "localhost",
-//   user: "trinh",
-//   password: "12345678"
-// });
 
 require('./mongoose-models/setup');
 
@@ -127,3 +121,5 @@ app.post('/api/sign-in', async (req, res) => {
 // });
 
 app.listen(port);
+
+console.log('Server is running on port ', port)
