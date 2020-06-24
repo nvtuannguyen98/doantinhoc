@@ -5,6 +5,8 @@ const path = require('path');
 const hbs = require('hbs');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const fileUpload = require('express-fileupload');
+const { CloudinaryService } = require('./services/cloudinary.service');
 
 require('./mongoose-models/setup');
 
@@ -25,6 +27,12 @@ app.use(bodyParser.json());
 // use cookie parser 
 app.use(cookieParser());
 
+app.use(fileUpload({
+    limits: {
+        fileSize: 50 * 1024 * 1024, // 50MB
+    },
+}));
+
 const hostname = '127.0.0.1'; // localhost
 const port = 3000;
 
@@ -42,36 +50,6 @@ app.get('/sign-up', (req, res) => {
 })
 
 const { EmployeeModel } = require('./mongoose-models')
-
-//     // function(err, connection) {
-//     //     console.log('here')
-//     //   if (err) {
-//     //       error = err; 
-//     //       console.log(error);
-//     //       return;
-//     //     }
-
-//     //     console.log('connected to db')
-
-//     //   connection.execute(`INSERT INTO USERS
-//     //   (USERNAME, PASSWORD)
-//     //   VALUES
-//     //   (${username}, ${password});`, [], function(err, result) {
-//     //     if (err) {
-//     //         error = err; 
-//     //         console.log(error);
-//     //         return;
-//     //     }
-
-//     //     console.log(result)
-
-//     //     connection.close(function(err) {
-//     //       if (err) {console.log(err);}
-//     //     });
-//     //   })
-//     // }
-// );
-
 
 // APIs
 
@@ -96,18 +74,58 @@ app.post('/api/sign-in', async (req, res) => {
 
     if (employee) {
         res.json({
-            isSuccess: true, 
+            isSuccess: true,
             employee,
         })
         return
     } else {
         res.json({
-            isSuccess: false, 
+            isSuccess: false,
         })
         return
     }
 
 })
+
+
+app.post('/api/categories',
+    async (req, res, next) => {
+
+        if (!req.files || Object.keys(req.files).length === 0) {
+            res.status(400).json({
+                message: 'No file was uploaded.',
+            })
+            return
+        }
+
+        let files = req.files.files
+        if (!Array.isArray(files)) {
+            req.files.files = [files]
+        }
+
+        next()
+    },
+    async (req, res) => {
+
+        const { name } = req.body
+
+        try {
+            const files = req.files.files
+
+            // Upload to Cloudinary
+            const cloudinaryFiles = await Promise.all(files.map(async file => {
+                return CloudinaryService.uploadFile(
+                    `data:${file.mimetype};base64,${file.data.toString('base64')}`,
+                    'avatar'
+                )
+            }))
+
+            res.json({cloudinaryFiles})
+
+        } catch (e) {
+            console.warn('[ERROR] uploadImage', e)
+        }
+    })
 
 
 
