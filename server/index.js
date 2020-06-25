@@ -1,52 +1,52 @@
-const http = require('http');
-const express = require('express');
-const app = express();
-const path = require('path');
-const hbs = require('hbs');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const fileUpload = require('express-fileupload');
-const { CloudinaryService } = require('./services/cloudinary.service');
+const http = require('http')
+const express = require('express')
+const app = express()
+const path = require('path')
+const hbs = require('hbs')
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const fileUpload = require('express-fileupload')
+const { CloudinaryService } = require('./services/cloudinary.service')
 
-require('./mongoose-models/setup');
+require('./mongoose-models/setup')
 
-let error;
-let user;
+let error
+let user
 
-app.use(express.static("public"));
+app.use(express.static("public"))
 
 app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs');
+app.set('view engine', 'ejs')
 
 // parse application/x-www-form-urlencoded 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // parse application/json 
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 
 // use cookie parser 
-app.use(cookieParser());
+app.use(cookieParser())
 
 app.use(fileUpload({
     limits: {
         fileSize: 50 * 1024 * 1024, // 50MB
     },
-}));
+}))
 
-const hostname = '127.0.0.1'; // localhost
-const port = 3000;
+const hostname = '127.0.0.1' // localhost
+const port = 3000
 
 // Render HTML
 app.get('/', (req, res) => {
-    res.render('index', { title: 'doantinhoc' });
+    res.render('index', { title: 'doantinhoc' })
 })
 
 app.get('/sign-in', (req, res) => {
-    res.render('sign-in', { title: 'doantinhoc' });
+    res.render('sign-in', { title: 'doantinhoc' })
 })
 
 app.get('/sign-up', (req, res) => {
-    res.render('sign-up', { title: 'doantinhoc' });
+    res.render('sign-up', { title: 'doantinhoc' })
 })
 
 const { EmployeeModel } = require('./mongoose-models')
@@ -54,7 +54,7 @@ const { EmployeeModel } = require('./mongoose-models')
 // APIs
 
 app.post('/api/sign-up', async (req, res) => {
-    const { email, name, phoneNumber, password, address } = req.body;
+    const { email, name, phoneNumber, password, address } = req.body
 
     // Add into database
     const employee = await EmployeeModel.create({
@@ -65,7 +65,7 @@ app.post('/api/sign-up', async (req, res) => {
 })
 
 app.post('/api/sign-in', async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password } = req.body
 
     // Add into database
     const employee = await EmployeeModel.findOne({
@@ -115,7 +115,7 @@ app.post('/api/categories',
             // Upload to Cloudinary
             const cloudinaryFiles = await Promise.all(files.map(async file => {
                 return CloudinaryService.uploadFile(
-                    `data:${file.mimetype};base64,${file.data.toString('base64')}`,
+                    `data:${file.mimetype}base64,${file.data.toString('base64')}`,
                     'avatar'
                 )
             }))
@@ -127,17 +127,6 @@ app.post('/api/categories',
         }
     })
 
-
-
-
-
-
-// const server = http.createServer((req, res) => {
-//   res.statusCode = 200;
-//   res.setHeader('Content-Type', 'text/plain');
-//   res.end('Hello World');
-// });
-
-app.listen(port);
+app.listen(port)
 
 console.log('Server is running on port ', port)
