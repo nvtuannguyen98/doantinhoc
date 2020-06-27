@@ -21,11 +21,21 @@
 ul.menu {
   width: 982px;
   float: left;
-  background: url(../../assets/img/b1.jpg);
   display:block;
   list-style-type: none;
-
 }
+
+a.customer-menu {
+  background: url(../../assets/img/banner/banner.png);
+}
+a.employee-menu {
+  background: url(../../assets/img/banner/img.png);
+}
+a.oder-menu {
+  background: url(../../assets/img/banner/dog.png);
+}
+
+
 ul.menu li{
   display:inline;
   font-size: 18px;
@@ -36,7 +46,7 @@ ul.menu li{
 ul.menu li.devider{
   display: inline;
   width: 8px;
-  height: 70px;
+  height: 100px;
   float: left ;
   background:red repeat-x center;
 }

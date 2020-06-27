@@ -52,6 +52,9 @@ app.get('/sign-up', (req, res) => {
 app.get('/admin', (req, res) => {
     res.render('admin-dashboard', { title: 'doantinhoc' })
 })
+app.get('/employee', (req, res) => {
+    res.render('employee', { title: 'doantinhoc' })
+})
 
 const { EmployeeModel } = require('./mongoose-models')
 
