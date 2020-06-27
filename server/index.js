@@ -10,9 +10,6 @@ const { CloudinaryService } = require('./services/cloudinary.service')
 
 require('./mongoose-models/setup')
 
-let error
-let user
-
 app.use(express.static("public"))
 
 app.set('views', path.join(__dirname, 'views'))
@@ -37,8 +34,9 @@ const hostname = '127.0.0.1' // localhost
 const port = 3000
 
 // Render HTML
-app.get('/', (req, res) => {
-    res.render('index', { title: 'doantinhoc' })
+app.get('/', async (req, res) => {
+    const categories = await CategoryModel.find({}).lean()
+    res.render('index', { title: 'doantinhoc', categories })
 })
 
 app.get('/sign-in', (req, res) => {
@@ -53,7 +51,10 @@ app.get('/admin', (req, res) => {
     res.render('admin-dashboard', { title: 'doantinhoc' })
 })
 
-const { EmployeeModel } = require('./mongoose-models')
+const { 
+    EmployeeModel, 
+    CategoryModel,
+ } = require('./mongoose-models')
 
 // APIs
 
@@ -95,41 +96,44 @@ app.post('/api/sign-in', async (req, res) => {
 app.post('/api/categories',
     async (req, res, next) => {
 
-        if (!req.files || Object.keys(req.files).length === 0) {
-            res.status(400).json({
-                message: 'No file was uploaded.',
-            })
-            return
-        }
-
-        let files = req.files.files
-        if (!Array.isArray(files)) {
-            req.files.files = [files]
-        }
-
-        next()
-    },
-    async (req, res) => {
-
         const { name } = req.body
 
         try {
-            const files = req.files.files
+
+            if (!req.files || Object.keys(req.files).length === 0) {
+                res.status(400).json({
+                    message: 'No file was uploaded.',
+                })
+                return
+            }
+
+            const file = req.files.file
+            if (Array.isArray(file)) {
+                res.status(400).json({
+                    message: 'Only 1 picture is allowed.',
+                })
+                return
+            }
 
             // Upload to Cloudinary
-            const cloudinaryFiles = await Promise.all(files.map(async file => {
-                return CloudinaryService.uploadFile(
-                    `data:${file.mimetype}base64,${file.data.toString('base64')}`,
-                    'avatar'
-                )
-            }))
+            const cloudinaryFile = await CloudinaryService.uploadFile(
+                `data:${file.mimetype};base64,${file.data.toString('base64')}`,
+                'avatar'
+            )
 
-            res.json({cloudinaryFiles})
+            const category = await CategoryModel.create({
+                name,
+                url: cloudinaryFile.url,
+            })
+
+            res.json(category)
 
         } catch (e) {
             console.warn('[ERROR] uploadImage', e)
         }
-    })
+
+    }
+)
 
 app.listen(port)
 
