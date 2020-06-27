@@ -408,36 +408,33 @@
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
 
-
         <script>
-        var $jq = jQuery.noConflict();
-        
-        function signIn() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            var $jq = jQuery.noConflict();
+            
+            function signIn() {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
 
-            console.log(email, password)
-            $jq.ajax({
-                type: 'POST',
-                url: '/api/sign-in',
-                dataType: 'json',
-                data: {email, password},
-                success: function(data) {
-                    console.log(data);
-                    if (data.isSuccess) {
-                        document.getElementById('error').innerText = ''
-                    } else {
-                        document.getElementById('error').innerText = 'Wrong email or password'
+                console.log(email, password)
+                $jq.ajax({
+                    type: 'POST',
+                    url: '/api/sign-in',
+                    dataType: 'json',
+                    data: {email, password},
+                    success: function(data) {
+                        console.log(data);
+                        if (data.isSuccess) {
+                            document.getElementById('error').innerText = ''
+                        } else {
+                            document.getElementById('error').innerText = 'Wrong email or password'
+                        }
+                    },
+                    error: function(xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
                     }
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.status);
-                }
-            });
-        }
-
-
-    </script>
+                });
+            }
+        </script>
     </body>
 
 </html>
