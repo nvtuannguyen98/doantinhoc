@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const fileUpload = require('express-fileupload')
 const { CloudinaryService } = require('./services/cloudinary.service')
+const ObjectId = require('mongoose').Types.ObjectId
 
 require('./mongoose-models/setup')
 
@@ -55,6 +56,7 @@ const {
     EmployeeModel, 
     CategoryModel,
  } = require('./mongoose-models')
+const { isObject } = require('util')
 
 // APIs
 
@@ -127,6 +129,70 @@ app.post('/api/categories',
             })
 
             res.json(category)
+
+        } catch (e) {
+            console.warn('[ERROR] uploadImage', e)
+        }
+
+    }
+)
+
+app.put('/api/categories',
+    async (req, res, next) => {
+
+        const { id, name } = req.body
+
+        try {
+
+            if (!req.files || Object.keys(req.files).length === 0) {
+                res.status(400).json({
+                    message: 'No file was uploaded.',
+                })
+                return
+            }
+
+            if (!ObjectId.isValid(id)) {
+                res.status(400).json({
+                    message: 'Invalid category id.',
+                })
+                return
+            }
+            const category = await CategoryModel.findOne({
+                _id: new ObjectId(id),
+            })
+
+            if (!category) {
+                res.status(400).json({
+                    message: 'Invalid category id.',
+                })
+                return
+            }
+
+            const file = req.files.file
+            if (Array.isArray(file)) {
+                res.status(400).json({
+                    message: 'Only 1 picture is allowed.',
+                })
+                return
+            }
+
+            // Upload to Cloudinary
+            const cloudinaryFile = await CloudinaryService.uploadFile(
+                `data:${file.mimetype};base64,${file.data.toString('base64')}`,
+                'avatar'
+            )
+
+            await CategoryModel.updateOne({
+                _id: new ObjectId(id),
+                name,
+                url: cloudinaryFile.url,
+            })
+
+            const newCategory = await CategoryModel.findOne({
+                _id: new ObjectId(id),
+            })
+
+            res.json(newCategory)
 
         } catch (e) {
             console.warn('[ERROR] uploadImage', e)
