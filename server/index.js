@@ -54,11 +54,20 @@ app.get('/admin', (req, res) => {
 app.get('/employee', (req, res) => {
     res.render('employee', { title: 'doantinhoc' })
 })
+app.get('/product-checkin', (req, res) => {
+    res.render('check-in', { title: 'doantinhoc' })
+})
+app.get('/oder', (req, res) => {
+    res.render('oder', { title: 'doantinhoc' })
+})
+app.get('/stock', (req, res) => {
+    res.render('stock', { title: 'doantinhoc' })
+})
 
-const { 
-    EmployeeModel, 
+const {
+    EmployeeModel,
     CategoryModel,
- } = require('./mongoose-models')
+} = require('./mongoose-models')
 const { isObject } = require('util')
 
 // APIs
