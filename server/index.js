@@ -63,6 +63,9 @@ app.get('/oder', (req, res) => {
 app.get('/stock', (req, res) => {
     res.render('stock', { title: 'doantinhoc' })
 })
+app.get('/addtocart', (req, res) => {
+    res.render('cart', { title: 'doantinhoc' })
+})
 
 const {
     EmployeeModel,
