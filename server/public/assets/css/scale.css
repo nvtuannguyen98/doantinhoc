@@ -139,3 +139,10 @@
 .category-area1 .single-category1 .category-img1 .category-caption1 p {
   color: #000000;
 }
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  /* line 778, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_common.scss */
+  .category-area1 section-padding301 {
+    padding-top: 50px;
+    padding-bottom: 120px;
+  }
+}

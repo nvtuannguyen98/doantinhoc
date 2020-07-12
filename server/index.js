@@ -51,7 +51,27 @@ app.get('/sign-up', (req, res) => {
 app.get('/admin', (req, res) => {
     res.render('admin-dashboard', { title: 'doantinhoc' })
 })
-
+app.get('/Dress', (req, res) => {
+    res.render('Dress', { title: 'doantinhoc' })
+})
+app.get('/Dress', (req, res) => {
+    res.render('Dress', { title: 'doantinhoc' })
+})
+app.get('/Jacket', (req, res) => {
+    res.render('Jacket', { title: 'doantinhoc' })
+})
+app.get('/Pants', (req, res) => {
+    res.render('Pants', { title: 'doantinhoc' })
+})
+app.get('/Shirt', (req, res) => {
+    res.render('Shirt', { title: 'doantinhoc' })
+})
+app.get('/Skirt', (req, res) => {
+    res.render('Skirt', { title: 'doantinhoc' })
+})
+app.get('/T-Shirt', (req, res) => {
+    res.render('T-Shirt', { title: 'doantinhoc' })
+})
 const { 
     EmployeeModel, 
     CategoryModel,
