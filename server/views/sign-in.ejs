@@ -213,10 +213,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label></label>
-                                    <select class="form-control">
-                                        <option>Admin</option>
-                                        <option>Employee</option>
-                                        <option>Customer</option>
+                                    <select class="form-control" id="user-type">
+                                        <option value="admin">Admin</option>
+                                        <option value="employee">Employee</option>
+                                        <option value="customer">Customer</option>
                                     </select>
                                 </div>
                             </form>
@@ -396,13 +396,14 @@
         function signIn() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const type = document.getElementById('user-type').value;
 
             console.log(email, password)
             $jq.ajax({
                 type: 'POST',
                 url: '/api/sign-in',
                 dataType: 'json',
-                data: { email, password },
+                data: { email, password, type },
                 success: function (data) {
                     console.log(data);
                     if (data.isSuccess) {

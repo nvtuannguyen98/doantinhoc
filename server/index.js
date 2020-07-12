@@ -132,23 +132,47 @@ app.post('/api/employees', async (req, res) => {
 })
 
 app.post('/api/sign-in', async (req, res) => {
-    const { email, password } = req.body
+    const { email, password, type } = req.body
 
-    // Add into database
-    const employee = await EmployeeModel.findOne({
-        email, password
-    })
-
-    if (employee) {
-        res.json({
-            isSuccess: true,
-            employee,
-        })
-        return
-    } else {
+    if (type === 'admin') {
         res.json({
             isSuccess: false,
         })
+        return
+    }
+
+    if (type === 'employee') {
+        const employee = await EmployeeModel.findOne({
+            email, password
+        })
+
+        if (employee) {
+            res.json({
+                isSuccess: true,
+                employee,
+            })
+        } else {
+            res.json({
+                isSuccess: false,
+            })
+        }
+        return
+    }
+
+    if (type === 'customer') {
+        const customer = await CustomerModel.findOne({
+            email, password,
+        })
+        if (customer) {
+            res.json({
+                isSuccess: true,
+                customer,
+            })
+        } else {
+            res.json({
+                isSuccess: false,
+            })
+        }
         return
     }
 
