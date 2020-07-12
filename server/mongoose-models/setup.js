@@ -13,7 +13,8 @@ fs.readdirSync(__dirname)
 db.mongoose = mongoose
 
 db.mongoose.set('useFindAndModify', false)
-db.mongoose.connect('mongodb://127.0.0.1:27017/EStore', {
+// mongo "mongodb+srv://cluster0.ssks9.gcp.mongodb.net/<dbname>" --username <username>
+db.mongoose.connect('mongodb+srv://thinh:thinh@cluster0.ssks9.gcp.mongodb.net/EStore', {
     keepAlive: 1,
     useNewUrlParser: true,
     useCreateIndex: true,
