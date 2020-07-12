@@ -64,6 +64,11 @@ app.get('/add-stock', async (req, res) => {
     const categories = await CategoryModel.find({}).lean()
     res.render('add-stock', { title: 'doantinhoc', categories })
 })
+app.get('/employee-list', async (req, res) => {
+    const categories = await CategoryModel.find({}).lean()
+    let employees = await EmployeeModel.find({}).lean()
+    res.render('employee-list', { title: 'doantinhoc', categories, employees })
+})
 app.get('/stocks-list', async (req, res) => {
     const categories = await CategoryModel.find({}).lean()
     let stocks = await StockModel.find({}).lean()
@@ -79,7 +84,21 @@ app.get('/stocks-list', async (req, res) => {
     console.log(stocks)
     res.render('stocks-list', { title: 'doantinhoc', categories, stocks })
 })
-
+app.get('/add-employee', async (req, res) => {
+    const categories = await CategoryModel.find({}).lean()
+    let stocks = await StockModel.find({}).lean()
+    stocks = stocks.map(stock => {
+        const category = categories.find(cat =>
+            new ObjectId(cat._id).equals(new ObjectId(stock.categoryId))
+        )
+        return {
+            ...stock,
+            categoryName: category.name,
+        }
+    })
+    console.log(stocks)
+    res.render('add-employee', { title: 'doantinhoc', categories, stocks })
+})
 const {
     EmployeeModel,
     CategoryModel,
@@ -91,6 +110,17 @@ const { isObject } = require('util')
 // APIs
 
 app.post('/api/sign-up', async (req, res) => {
+    const { email, name, phoneNumber, password, address } = req.body
+
+    // Add into database
+    const customer = await CustomerModel.create({
+        email, name, phoneNumber, password, address
+    })
+
+    res.json(customer)
+})
+
+app.post('/api/employees', async (req, res) => {
     const { email, name, phoneNumber, password, address } = req.body
 
     // Add into database

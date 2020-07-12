@@ -195,151 +195,37 @@
 
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Cargo information</h3>
+                <h3 class="card-title">Employees information</h3>
             </div>
 
-            <!-- Main content -->
-            <section class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <!-- left column -->
-                        <div class="col-md-6">
-                            <!-- general form elements -->
-                            <div class="card card-primary">
-                                <div class="card-header">
-                                    <h3 class="card-title">Enter </h3>
-                                </div>
-                                <!-- /.card-header -->
-                                <!-- form start -->
-                                <form>
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Name</label>
-                                            <input type="text" class="form-control" id="name" placeholder="Name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Category</label>
-                                            <select name="category" id="categoryId">
-                                                <% for(var i=0; i<categories.length; i++) {%>
-                                                <option value="<%= categories[i]._id %>">
-                                                    <%= categories[i].name %>
-                                                </option>
-                                                <% } %>
-                                            </select>
-                                            <!-- <input type="email" class="form-control" id="categoryId"
-                                                placeholder="Category"> -->
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputEmail1">Price</label>
-                                            <input type="number" class="form-control" id="price" placeholder="Price">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputPassword1">Deal price</label>
-                                            <input type="number" class="form-control" id="dealPrice"
-                                                placeholder="Deal price">
-                                        </div>
-                                        <!-- <div class="content-wrapper"> -->
-                                        <!-- Content Header (Page header) -->
-                                        <section class="content-header">
-                                            <div class="container-fluid">
-                                                <div class="row mb-2">
-                                                    <div class="col-sm-6">
-                                                        <h1>Description</h1>
-                                                    </div>
-                                                    <!-- <div class="col-sm-6">
-                                                        <ol class="breadcrumb float-sm-right">
-                                                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                                            <li class="breadcrumb-item active">Text Editors</li>
-                                                        </ol>
-                                                    </div> -->
-                                                </div>
-                                            </div>
-                                        </section>
-
-                                        <!-- Main content -->
-                                        <section class="content">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="card card-outline card-info">
-                                                        <!-- <div class="card-header">
-                                                            <h3 class="card-title">
-                                                                Bootstrap WYSIHTML5
-                                                                <small>Simple and fast</small>
-                                                            </h3>
-                                                            <div class="card-tools">
-                                                                <button type="button" class="btn btn-tool btn-sm"
-                                                                    data-card-widget="collapse" data-toggle="tooltip"
-                                                                    title="Collapse">
-                                                                    <i class="fas fa-minus"></i></button>
-                                                                <button type="button" class="btn btn-tool btn-sm"
-                                                                    data-card-widget="remove" data-toggle="tooltip"
-                                                                    title="Remove">
-                                                                    <i class="fas fa-times"></i></button>
-                                                            </div>
-                                                        </div> -->
-                                                        <!-- /.card-header -->
-                                                        <div class="card-body pad">
-                                                            <div class="mb-3">
-                                                                <textarea class="textarea" id="description"
-                                                                    placeholder="Description"
-                                                                    style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                                                            </div>
-                                                            <!-- <p class="text-sm mb-0">
-                                                                Editor <a
-                                                                    href="https://github.com/summernote/summernote">Documentation
-                                                                    and license
-                                                                    information.</a>
-                                                            </p> -->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- /.col-->
-                                            </div>
-                                            <!-- ./row -->
-                                        </section>
-                                        <!-- /.content -->
-                                        <!--  </div> -->
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">File
-                                                input</label>
-                                            <div class="input-group">
-                                                <div class="custom-file">
-                                                    <input type="file" class="custom-file-input" id="fileInput">
-                                                    <label class="custom-file-label" for="fileInput"
-                                                        onclick="displayfilename()">Choose
-                                                        file</label>
-                                                </div>
-                                                <!-- <div class="input-group-append">
-                                                    <span class="input-group-text">Upload</span>
-                                                </div> -->
-                                            </div>
-                                        </div>
-                                        <!-- <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                            <label class="form-check-label" for="exampleCheck1">Check me
-                                                in</label>
-                                        </div> -->
-                                    </div>
-                                    <!-- /.card-body -->
-
-                                </form>
-
-                                <div class="card-footer">
-                                    <button class="btn btn-primary" onclick="submit()">Submit</button>
-                                </div>
-
-                                <!-- /.card -->
-
-
-                            </div>
-                            <!-- /.card -->
-                        </div>
-                        <!--/.col (right) -->
-                    </div>
-                    <!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </section>
             <!-- /.card-header -->
+            <div class="card-body">
+                <table id="example1" class="table table-bordered
+                        table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Password</th>
+                            <th>Email</th>
+                            <th>Phone Numer</th>
+                            <th>Address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(var i=0; i<employees.length; i++) {%>
+                            <tr>
+                                <td><%= employees[i]._id %></td>
+                                <td><%= employees[i].name %></td>
+                                <td><%= employees[i].password %></td>
+                                <td><%= employees[i].email %></td>
+                                <td><%= employees[i].phoneNumber %></td>
+                                <td><%= employees[i].address %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </div>
             <!-- /.card-body -->
         </div>
 
@@ -493,72 +379,6 @@
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
 
-
-    <script>
-
-        var $jq = jQuery.noConflict();
-
-        function displayfilename() {
-            $('#fileInput').change(function (e) {
-                var fileName = e.target.files[0].name;
-                alert('The file "' + fileName + '" has been selected.');
-            });
-        }
-
-        async function submit() {
-            const files = document.getElementById("fileInput").files;
-            console.log(files)
-
-            if (files && files.length) {
-                const file = files[0]
-                console.log('file', file)
-                const formData = new FormData()
-                formData.append("file", file)
-                $jq.ajax({
-                    type: 'POST',
-                    url: '/api/images',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function (data) {
-                        console.log(data);
-                        const name = document.getElementById('name').value;
-                        const categoryId = document.getElementById('categoryId').value;
-                        const price = Number(document.getElementById('price').value);
-                        const dealPrice = Number(document.getElementById('dealPrice').value);
-                        const description = document.getElementById('description').value;
-                        const url = data.url
-                        const requestData = {
-                            name,
-                            categoryId,
-                            price,
-                            dealPrice,
-                            description,
-                            url,
-                        }
-                        console.log("requestData", requestData)
-                        $jq.ajax({
-                            type: 'POST',
-                            url: '/api/stocks',
-                            dataType: 'json',
-                            data: requestData,
-                            success: function (data) {
-                                console.log(data)
-                                alert("Create stock successfully")
-                            },
-                            error: function (xhr, ajaxOptions, thrownError) {
-                                console.log(xhr.status);
-                            }
-                        });
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                    }
-                });
-            }
-        }
-
-    </script>
 
 </body>
 
