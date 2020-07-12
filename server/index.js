@@ -99,7 +99,7 @@ app.get('/add-employee', async (req, res) => {
     console.log(stocks)
     res.render('add-employee', { title: 'doantinhoc', categories, stocks })
 })
-app.get('/addtocart', (req, res) => {
+app.get('/cart', (req, res) => {
     res.render('cart', { title: 'doantinhoc' })
 })
 
@@ -139,9 +139,20 @@ app.post('/api/sign-in', async (req, res) => {
     const { email, password, type } = req.body
 
     if (type === 'admin') {
-        res.json({
-            isSuccess: false,
+        const admin = await AdminModel.findOne({
+            email, password
         })
+        if (admin) {
+            res.json({
+                isSuccess: true,
+                admin,
+            })
+        } else {
+            res.json({
+                isSuccess: false,
+            })
+        }
+        return
         return
     }
 
