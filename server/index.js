@@ -60,13 +60,31 @@ app.get('/product-checkin', (req, res) => {
 app.get('/oder', (req, res) => {
     res.render('oder', { title: 'doantinhoc' })
 })
-app.get('/stock', (req, res) => {
-    res.render('stock', { title: 'doantinhoc' })
+app.get('/add-stock', async (req, res) => {
+    const categories = await CategoryModel.find({}).lean()
+    res.render('add-stock', { title: 'doantinhoc', categories })
+})
+app.get('/stocks-list', async (req, res) => {
+    const categories = await CategoryModel.find({}).lean()
+    let stocks = await StockModel.find({}).lean()
+    stocks = stocks.map(stock => {
+        const category = categories.find(cat =>
+            new ObjectId(cat._id).equals(new ObjectId(stock.categoryId))
+        )
+        return {
+            ...stock,
+            categoryName: category.name,
+        }
+    })
+    console.log(stocks)
+    res.render('stocks-list', { title: 'doantinhoc', categories, stocks })
 })
 
 const {
     EmployeeModel,
     CategoryModel,
+    StockModel,
+    CustomerModel,
 } = require('./mongoose-models')
 const { isObject } = require('util')
 
@@ -106,6 +124,26 @@ app.post('/api/sign-in', async (req, res) => {
 
 })
 
+app.post('/api/stocks', async (req, res) => {
+    const { name, categoryId, price, dealPrice, url, description } = req.body
+
+    if (!ObjectId.isValid(categoryId)) {
+        res.status(403).json({ error: { message: `Invalid categoryId ${categoryId}` } })
+        return
+    }
+    const category = await CategoryModel.findOne({ _id: new ObjectId(categoryId) })
+    if (!category) {
+        res.status(403).json({ error: { message: `Invalid categoryId ${categoryId}` } })
+        return
+    }
+
+    // Add into database
+    const stock = await StockModel.create({
+        name, categoryId, price, dealPrice, url, description
+    })
+
+    res.json(stock)
+})
 
 app.post('/api/categories',
     async (req, res, next) => {
@@ -141,6 +179,45 @@ app.post('/api/categories',
             })
 
             res.json(category)
+
+        } catch (e) {
+            console.warn('[ERROR] uploadImage', e)
+        }
+
+    }
+)
+
+app.post('/api/images',
+    async (req, res, next) => {
+
+        try {
+
+            if (!req.files || Object.keys(req.files).length === 0) {
+                res.status(400).json({
+                    message: 'No file was uploaded.',
+                })
+                return
+            }
+
+            const file = req.files.file
+            if (Array.isArray(file)) {
+                res.status(400).json({
+                    message: 'Only 1 picture is allowed.',
+                })
+                return
+            }
+
+            console.log("Uploading to Cloudinary")
+
+            // Upload to Cloudinary
+            const cloudinaryFile = await CloudinaryService.uploadFile(
+                `data:${file.mimetype};base64,${file.data.toString('base64')}`,
+                'avatar'
+            )
+
+            console.log("Uploaded to Cloudinary. Done!")
+
+            res.json(cloudinaryFile)
 
         } catch (e) {
             console.warn('[ERROR] uploadImage', e)
@@ -212,6 +289,20 @@ app.put('/api/categories',
 
     }
 )
+
+app.get('/api/categories',
+    async (req, res, next) => {
+
+        try {
+            const categories = await CategoryModel.find({})
+            res.json({ categories })
+        } catch (e) {
+            console.warn('[ERROR] categories', e)
+        }
+
+    }
+)
+
 
 app.listen(port)
 
