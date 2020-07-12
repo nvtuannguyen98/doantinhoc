@@ -4206,7 +4206,7 @@ input:focus {
 
 /* line 14, ../../SAIFUL/Running_project/250 eCommerce_HTML/250 eCommerce_HTML/250 eCommerce_HTML/assets/scss/_category.scss */
 .category-area .single-category .category-img img {
-  width: 100%;
+  width: 10%;
   border-radius: 6px;
 }
 
