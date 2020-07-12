@@ -99,6 +99,10 @@ app.get('/add-employee', async (req, res) => {
     console.log(stocks)
     res.render('add-employee', { title: 'doantinhoc', categories, stocks })
 })
+app.get('/addtocart', (req, res) => {
+    res.render('cart', { title: 'doantinhoc' })
+})
+
 const {
     EmployeeModel,
     CategoryModel,

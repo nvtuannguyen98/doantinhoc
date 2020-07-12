@@ -238,13 +238,13 @@
                                         </div>
                                         <!-- <div class="content-wrapper"> -->
                                         <!-- Content Header (Page header) -->
-                                        
+
 
                                         <!-- Main content -->
 
                                         <!-- /.content -->
                                         <!--  </div> -->
- 
+
                                         <!-- <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                             <label class="form-check-label" for="exampleCheck1">Check me
@@ -425,9 +425,9 @@
         crossorigin="anonymous"></script>
 
 
-    <<script>
+    <script>
         var $jq = jQuery.noConflict();
-        
+
         function submit() {
             const email = document.getElementById('email').value;
             const name = document.getElementById('name').value;
@@ -436,16 +436,16 @@
             const address = document.getElementById('address').value;
 
             console.log(email, name, phoneNumber, password, address)
-            
+
             $jq.ajax({
                 type: 'POST',
                 url: '/api/employees',
                 dataType: 'json',
-                data: {email, name, phoneNumber, password, address},
-                success: function(data) {
+                data: { email, name, phoneNumber, password, address },
+                success: function (data) {
                     console.log(data);
                 },
-                error: function(xhr, ajaxOptions, thrownError) {
+                error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
                 }
             });
