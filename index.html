@@ -3,32 +3,24 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title> <%= title%> </title>
+        <title> Do an tin hoc </title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="manifest" href="site.webmanifest">
 		<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
 		<!-- CSS here -->
-        <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-        <link rel="stylesheet" href="assets/css/flaticon.css">
-        <link rel="stylesheet" href="assets/css/slicknav.css">
-        <link rel="stylesheet" href="assets/css/animate.min.css">
-        <link rel="stylesheet" href="assets/css/magnific-popup.css">
-        <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="assets/css/themify-icons.css">
-        <link rel="stylesheet" href="assets/css/slick.css">
-        <link rel="stylesheet" href="assets/css/nice-select.css">
-        <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/scale.css">
-
-        <style>
-            .hover-single-category:hover {
-                cursor: pointer;
-            }
-        </style>
-
+            <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+            <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+            <link rel="stylesheet" href="assets/css/flaticon.css">
+            <link rel="stylesheet" href="assets/css/slicknav.css">
+            <link rel="stylesheet" href="assets/css/animate.min.css">
+            <link rel="stylesheet" href="assets/css/magnific-popup.css">
+            <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+            <link rel="stylesheet" href="assets/css/themify-icons.css">
+            <link rel="stylesheet" href="assets/css/slick.css">
+            <link rel="stylesheet" href="assets/css/nice-select.css">
+            <link rel="stylesheet" href="assets/css/style.css">
    </head>
 
    <body>
@@ -101,8 +93,8 @@
                                 <div class="main-menu f-right d-none d-lg-block">
                                     <nav>                                                
                                         <ul id="navigation">                                                                                                                                     
-                                            <li><a href="index.html"><%= title%></a></li>
-                                            <li><a href="Catagori.html">Product</a></li>
+                                            <li><a href="index.html">Home</a></li>
+                                            <li><a href="Catagori.html">Catagori</a></li>
                                             <li class="hot"><a href="#">Latest</a>
                                                 <ul class="submenu">
                                                     <li><a href="product_list.html"> Product list</a></li>
@@ -220,7 +212,7 @@
         </div>
         <!-- slider Area End-->
         <!-- Category Area Start-->
-        <section class="category-area1 section-padding30">
+        <section class="category-area section-padding30">
             <div class="container-fluid">
                 <!-- Section Tittle -->
                 <div class="row">
@@ -231,21 +223,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <% for(var i=0; i<categories.length; i++) {%>
-                        <div class="col-xl-4 col-lg-6">
-                            <a href="<%= categories[i].name %>"><div class="single-category1 mb-30 hover-single-category">
-                                <div class="category-img1">
-                                    <img src="<%= categories[i].url %>" alt="">
-                                    <div class="category-caption1">
-                                        <h2><%= categories[i].name %></h2>
-                                        <!-- <span class="best"><a href="#">Best New Deals</a></span>
-                                        <span class="colle  ction">New Collection</span> -->
-                                    </div>
-                                </div>
-                            </div></a>
-                        </div>
-                     <% } %>
-                    <!-- <div class="col-xl-4 col-lg-6">
+                    <div class="col-xl-4 col-lg-6">
                         <div class="single-category mb-30">
                             <div class="category-img">
                                 <img src="assets/img/categori/cat1.jpg" alt="">
@@ -257,7 +235,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-6">
+                     <div class="col-xl-4 col-lg-6">
                         <div class="single-category mb-30">
                             <div class="category-img text-center">
                                 <img src="assets/img/categori/cat2.jpg" alt="">
@@ -280,7 +258,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </section>
