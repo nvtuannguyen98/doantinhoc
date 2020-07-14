@@ -108,6 +108,7 @@ const {
     CategoryModel,
     StockModel,
     CustomerModel,
+    AdminModel,
 } = require('./mongoose-models')
 const { isObject } = require('util')
 
