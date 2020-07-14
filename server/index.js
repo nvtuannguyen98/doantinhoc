@@ -38,6 +38,14 @@ const port = 3000
 app.get('/checkout', (req, res) => {
     res.render('checkout', { title: 'doantinhoc' })
 })
+app.get('/stocks',async (req, res) => {
+    const id = req.query.id
+    let stock = null
+    if (id && ObjectId.isValid(id)) {
+        stock = await StockModel.findOne({_id: new ObjectId(id)}).lean()
+    }
+    res.render('stock-detail', { title: 'doantinhoc', stock : stock ? stock : {}, isStockExisted: stock ? true : false })
+})
 app.get('/single-product', (req, res) => {
     res.render('single-product', { title: 'doantinhoc' })
 })

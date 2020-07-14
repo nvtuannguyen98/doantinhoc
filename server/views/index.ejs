@@ -358,7 +358,7 @@
                         <div class="row">
                             <% for(var i=0; i<latestStocks.length; i++) {%>
                             <div class="col-xl-4 col-lg-4
-                                                    col-md-6">
+                                                    col-md-6" style="cursor: pointer;" onclick="goToStockDetail('<%= latestStocks[i]._id %>')">
                                 <div class="single-product
                                                         mb-60">
                                     <div class="product-img">
@@ -387,8 +387,8 @@
                                         <h4><a href="#"><%= latestStocks[i].name %></a></h4>
                                         <div class="price">
                                             <ul>
-                                                <li><%= latestStocks[i].price %></li>
-                                                <li class="discount"><%= latestStocks[i].dealPrice %></li>
+                                                <li><%= latestStocks[i].dealPrice %></li>
+                                                <li class="discount"><%= latestStocks[i].price %></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1474,6 +1474,11 @@
         function signOut() {
             deleteCookie("userData")
             checkUserData()
+        }
+
+        function goToStockDetail(id) {
+            console.log(id)
+            location.href = `/stocks?id=${id}`
         }
 
 
