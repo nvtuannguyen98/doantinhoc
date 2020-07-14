@@ -84,27 +84,6 @@ app.get('/employee-list', async (req, res) => {
     let employees = await EmployeeModel.find({}).lean()
     res.render('employee-list', { title: 'doantinhoc', categories, employees })
 })
-app.get('/Dress', (req, res) => {
-    res.render('Dress', { title: 'doantinhoc' })
-})
-app.get('/Dress', (req, res) => {
-    res.render('Dress', { title: 'doantinhoc' })
-})
-app.get('/Jacket', (req, res) => {
-    res.render('Jacket', { title: 'doantinhoc' })
-})
-app.get('/Pants', (req, res) => {
-    res.render('Pants', { title: 'doantinhoc' })
-})
-app.get('/Shirt', (req, res) => {
-    res.render('Shirt', { title: 'doantinhoc' })
-})
-app.get('/Skirt', (req, res) => {
-    res.render('Skirt', { title: 'doantinhoc' })
-})
-app.get('/T-Shirt', (req, res) => {
-    res.render('T-Shirt', { title: 'doantinhoc' })
-})
 app.get('/stocks-list', async (req, res) => {
     const categories = await CategoryModel.find({}).lean()
     let stocks = await StockModel.find({}).lean()
@@ -144,6 +123,7 @@ const {
     CategoryModel,
     StockModel,
     CustomerModel,
+    AdminModel,
 } = require('./mongoose-models')
 const { isObject } = require('util')
 
