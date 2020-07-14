@@ -11,6 +11,11 @@ const StockSchema = new mongoose.Schema({
     dealPrice: Number,
     url: String,
     description: String,
+
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 })
 
 module.exports = {

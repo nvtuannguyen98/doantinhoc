@@ -7,6 +7,11 @@ const AdminSchema = new mongoose.Schema({
     phoneNumber: String,
     password: String,
     address: String,
+
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 })
 
 module.exports = {

@@ -38,9 +38,6 @@ const port = 3000
 app.get('/checkout', (req, res) => {
     res.render('checkout', { title: 'doantinhoc' })
 })
-app.get('/index-login', (req, res) => {
-    res.render('index-login', { title: 'doantinhoc' })
-})
 app.get('/single-product', (req, res) => {
     res.render('single-product', { title: 'doantinhoc' })
 })
@@ -55,7 +52,17 @@ app.get('/about', (req, res) => {
 })    
 app.get('/', async (req, res) => {
     const categories = await CategoryModel.find({}).lean()
-    res.render('index', { title: 'doantinhoc', categories })
+    const latestStocks = await StockModel.aggregate([
+        {
+            $sort: {
+                createdAt: -1,
+            }
+        },
+        {
+            $limit: 6
+        },
+    ])
+    res.render('index', { title: 'doantinhoc', categories, latestStocks })
 })
 
 app.get('/sign-in', (req, res) => {

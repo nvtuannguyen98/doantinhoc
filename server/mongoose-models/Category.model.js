@@ -4,6 +4,11 @@ const ObjectId = require('mongoose').Types.ObjectId
 const CategorySchema = new mongoose.Schema({
     name: String,
     url: String,
+
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 })
 
 module.exports = {

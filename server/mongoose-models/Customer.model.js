@@ -8,6 +8,11 @@ const CustomerSchema = new mongoose.Schema({
     password: String,
     address: String,
     customerType: String,
+
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 })  
 
 module.exports = {
