@@ -35,6 +35,21 @@ const hostname = '127.0.0.1' // localhost
 const port = 3000
 
 // Render HTML
+app.get('/checkout', (req, res) => {
+    res.render('checkout', { title: 'doantinhoc' })
+})
+app.get('/single-product', (req, res) => {
+    res.render('single-product', { title: 'doantinhoc' })
+})
+app.get('/Catagori', (req, res) => {
+    res.render('Catagori', { title: 'doantinhoc' })
+})
+app.get('/product_list', (req, res) => {
+    res.render('product_list', { title: 'doantinhoc' })
+})
+app.get('/about', (req, res) => {
+    res.render('about', { title: 'doantinhoc' })
+})    
 app.get('/', async (req, res) => {
     const categories = await CategoryModel.find({}).lean()
     res.render('index', { title: 'doantinhoc', categories })
