@@ -417,7 +417,8 @@
                     console.log(data);
                     if (data.isSuccess) {
                         document.getElementById('error').innerText = ''
-                        setCookie("userData", JSON.stringify(data), 2)
+                        setCookie("userData", JSON.stringify(data.user), 2)
+                        location.href='index-login'
                     } else {
                         document.getElementById('error').innerText = 'Wrong email or password'
                     }

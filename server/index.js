@@ -38,6 +38,9 @@ const port = 3000
 app.get('/checkout', (req, res) => {
     res.render('checkout', { title: 'doantinhoc' })
 })
+app.get('/index-login', (req, res) => {
+    res.render('index-login', { title: 'doantinhoc' })
+})
 app.get('/single-product', (req, res) => {
     res.render('single-product', { title: 'doantinhoc' })
 })
@@ -161,14 +164,13 @@ app.post('/api/sign-in', async (req, res) => {
         if (admin) {
             res.json({
                 isSuccess: true,
-                admin,
+                user: admin,
             })
         } else {
             res.json({
                 isSuccess: false,
             })
         }
-        return
         return
     }
 
@@ -180,7 +182,7 @@ app.post('/api/sign-in', async (req, res) => {
         if (employee) {
             res.json({
                 isSuccess: true,
-                employee,
+                user: employee,
             })
         } else {
             res.json({
@@ -197,7 +199,7 @@ app.post('/api/sign-in', async (req, res) => {
         if (customer) {
             res.json({
                 isSuccess: true,
-                customer,
+                user: customer,
             })
         } else {
             res.json({
