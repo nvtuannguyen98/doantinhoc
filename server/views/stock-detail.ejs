@@ -268,25 +268,6 @@
         }
     </script>
     <script>
-            var name = cname + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);
-            var ca = decodedCookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    try {
-                        return JSON.parse(c.substring(name.length, c.length))
-                    } catch (e) {
-                        return null
-                    }
-                }
-            }
-            return null;
-        }
-
         function addToCart() {
             const stocks = getCookie("stocks") || []
             const amount = Number(document.getElementById('amount').value || 0)

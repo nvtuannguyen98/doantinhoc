@@ -10,6 +10,9 @@ function checkUserData() {
         $("#signInButton").show()
         $("#signOutButton").hide()
     }
+
+    const stocks = getCookie("stocks") || []
+    document.getElementById('shoppingCardNumber').innerText = stocks.length
 }
 
 checkUserData()
