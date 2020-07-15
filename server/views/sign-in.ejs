@@ -274,7 +274,7 @@
                     if (data.isSuccess) {
                         document.getElementById('error').innerText = ''
                         setCookie("userData", JSON.stringify(data.user), 2)
-                        location.href=''
+                        location.href= '/'
                     } else {
                         document.getElementById('error').innerText = 'Wrong email or password'
                     }
@@ -283,6 +283,11 @@
                     console.log(xhr.status);
                 }
             });
+        }
+
+        const userData = getCookie("userData")
+        if (userData) {
+            location.href = '/'
         }
     </script>
 </body>
