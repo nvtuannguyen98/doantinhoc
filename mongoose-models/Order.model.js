@@ -6,7 +6,7 @@ const OrderSchema = new mongoose.Schema({
     stocks: {
         type: [{
             stockId: ObjectId,
-            amount: ObjectId,
+            amount: Number,
         }]
     },
     totalPrice: Number,

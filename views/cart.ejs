@@ -206,6 +206,7 @@
   <script src="./assets/my-js/check-user-data.js"></script>
   <script>
     const stockDatas = getCookie("stocks") || []
+    const userData = getCookie("userData")
     stockDatas.map(stockData => {
       const { stock, amount } = stockData
       $("#stocks-list").append(`
@@ -233,7 +234,7 @@
         </td>
       </tr>`)
     })
-    const totalPrice = roundPrice(stockDatas.reduce((sum, stockData) => { return sum += stockData.stock.dealPrice * stockData.amount}, 0))
+    const totalPrice = roundPrice(stockDatas.reduce((sum, stockData) => { return sum += stockData.stock.dealPrice * stockData.amount }, 0))
     $('#stocks-list').append(`
     <tr>
       <td></td>
@@ -287,11 +288,42 @@
             <option value="2">Select a State</option>
             <option value="4">Select a State</option>
           </select> -->
-          <input class="post_code" type="text" placeholder="Shipping address" />
-          <a class="btn_1" href="#">Order Now</a>
+          <input id="shippingAddress" class="post_code" type="text" placeholder="Shipping address" />
+          <a class="btn_1" onclick="order()">Order Now</a>
         </div>
       </td>
     </tr>`)
+
+    var $jq = jQuery.noConflict();
+
+    function order() {
+      if (!userData) {
+        location.href = '/sign-in'
+        return
+      }
+
+      const customerId = userData._id
+      const stocks = stockDatas.map(stockData => ({
+        stockId: stockData.stock._id,
+        amount: stockData.amount,
+      }))
+      const address = document.getElementById('shippingAddress').value;
+
+      $jq.ajax({
+        type: 'POST',
+        url: '/api/orders',
+        dataType: 'json',
+        data: { customerId, stocks, totalPrice, address },
+        success: function (data) {
+          console.log(data);
+          deleteCookie('stocks')
+          location.href = '/'
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log(xhr.status);
+        }
+      })
+    }
   </script>
 </body>
 

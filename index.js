@@ -9,6 +9,11 @@ const fileUpload = require('express-fileupload')
 const { CloudinaryService } = require('./services/cloudinary.service')
 const ObjectId = require('mongoose').Types.ObjectId
 
+const ORDER_STATUS = {
+    ORDERED: 'ordered',
+    RECEIVED: 'received',
+}
+
 require('./mongoose-models/setup')
 
 app.use(express.static("public"))
@@ -173,6 +178,27 @@ app.post('/api/employees', async (req, res) => {
 
     res.json(employee)
 })
+
+app.post('/api/orders', async (req, res) => {
+    const { customerId, stocks, totalPrice, address } = req.body
+
+    // Todo: Check
+
+    // Add into database
+    const order = await OrderModel.create({
+        customerId: new ObjectId(customerId), 
+        stocks: stocks.map(stock => ({
+            ...stock,
+            stockId: new ObjectId(stock.stockId),
+        })), 
+        totalPrice, 
+        address, 
+        status: ORDER_STATUS.ORDERED,
+    })
+
+    res.json(order)
+})
+
 
 app.post('/api/sign-in', async (req, res) => {
     const { email, password, type } = req.body
