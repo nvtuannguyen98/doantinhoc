@@ -3,6 +3,8 @@ const Employee = require('./Employee.model')
 const Category = require('./Category.model')
 const Stock = require('./Stock.model')
 const Customer = require('./Customer.model')
+const Order = require('./Order.model')
+
 module.exports = {
     // Admin
     AdminModel: Admin.AdminModel,
@@ -18,5 +20,8 @@ module.exports = {
 
     //Customer
     CustomerModel: Customer.CustomerModel,
+
+    // Order
+    OrderModel: Order.OrderModel,
 
 }

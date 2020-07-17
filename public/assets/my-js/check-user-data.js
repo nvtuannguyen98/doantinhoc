@@ -1,5 +1,5 @@
 function checkUserData() {
-    const userData = getCookie("userData");
+    const userData = getCookie("userData")
     console.log(userData)
     if (userData) {
         $("#signInButton").hide()
@@ -27,6 +27,10 @@ function signOut() {
 function goToStockDetail(id) {
     console.log(id)
     location.href = `/stocks?id=${id}`
+}
+
+function roundPrice(price) {
+    return Math.round(price * 100)/100
 }
 
 checkUserData()
