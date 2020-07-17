@@ -3,12 +3,6 @@ const ObjectId = require('mongoose').Types.ObjectId
 
 const OrderSchema = new mongoose.Schema({
     customerId: ObjectId,
-    stocks: {
-        type: [{
-            stockId: ObjectId,
-            amount: Number,
-        }]
-    },
     totalPrice: Number,
     address: String,
     status: String,
@@ -19,6 +13,18 @@ const OrderSchema = new mongoose.Schema({
     },
 })
 
+const CustomerOrderStockSchema = new mongoose.Schema({
+    stockId: ObjectId,
+    amount: Number,
+    orderId: ObjectId,
+
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+})
+
 module.exports = {
     OrderModel: mongoose.model('Order', OrderSchema, 'Order'),
+    CustomerOrderStockModel: mongoose.model('CustomerOrderStock', CustomerOrderStockSchema, 'CustomerOrderStock'),
 }

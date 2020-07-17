@@ -6,7 +6,6 @@ const hbs = require('hbs')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const fileUpload = require('express-fileupload')
-const { CloudinaryService } = require('./services/cloudinary.service')
 const ObjectId = require('mongoose').Types.ObjectId
 
 const ORDER_STATUS = {
@@ -15,6 +14,9 @@ const ORDER_STATUS = {
 }
 
 require('./mongoose-models/setup')
+
+const { CloudinaryService } = require('./services/cloudinary.service')
+const { HelperService } = require('./services/helper.service')
 
 app.use(express.static("public"))
 
@@ -152,8 +154,8 @@ const {
     CustomerModel,
     AdminModel,
     OrderModel,
+    CustomerOrderStockModel,
 } = require('./mongoose-models')
-const { isObject } = require('util')
 
 // APIs
 
@@ -186,17 +188,25 @@ app.post('/api/orders', async (req, res) => {
 
     // Add into database
     const order = await OrderModel.create({
-        customerId: new ObjectId(customerId), 
-        stocks: stocks.map(stock => ({
-            ...stock,
-            stockId: new ObjectId(stock.stockId),
-        })), 
-        totalPrice, 
-        address, 
+        customerId: new ObjectId(customerId),
+        totalPrice,
+        address,
         status: ORDER_STATUS.ORDERED,
     })
 
-    res.json(order)
+    console.log(order)
+
+    const customerOrderStocks = await Promise.all(stocks.map(async stock => {
+        return CustomerOrderStockModel.create({
+            amount: stock.amount || 0,
+            stockId: new ObjectId(stock.stockId),
+            orderId: new ObjectId(order._id),
+        })
+    }))
+
+    res.json(
+        await HelperService.getOrderDetail(order._id)
+    )
 })
 
 

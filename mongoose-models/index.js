@@ -23,5 +23,6 @@ module.exports = {
 
     // Order
     OrderModel: Order.OrderModel,
+    CustomerOrderStockModel: Order.CustomerOrderStockModel,
 
 }
