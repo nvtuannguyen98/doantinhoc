@@ -86,14 +86,20 @@
                                     <input type="text" class="form-control" id="address" name="address" value=""
                                         placeholder="address">
                                 </div>
-
+                                <div class="col-md-12 form-group p_star">
+                                    <label></label>
+                                    <select class="form-control" id="user-type">
+                                        <option value="customer" selected>Customer</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
                             </form>
                             <div class="col-md-12 form-group">
-                                <div class="creat_account d-flex
+                                <!-- <div class="creat_account d-flex
                                         align-items-center">
                                     <input type="checkbox" id="f-option" name="selector">
                                     <label for="f-option">Remember me</label>
-                                </div>
+                                </div> -->
                                 <!-- <a class="lost_pass" href="#">forget password?</a> -->
                                 <button onclick="signUp()" class="btn_3">
                                     SIGN UP
@@ -267,15 +273,15 @@
             const phoneNumber = document.getElementById('phoneNumber').value;
             const password = document.getElementById('password').value;
             const address = document.getElementById('address').value;
+            const type = document.getElementById('user-type').value;
 
-
-            console.log(email, name, phoneNumber, password, address)
+            console.log(email, name, phoneNumber, password, address, type)
 
             $jq.ajax({
                 type: 'POST',
                 url: '/api/sign-up',
                 dataType: 'json',
-                data: { email, name, phoneNumber, password, address },
+                data: { email, name, phoneNumber, password, address,type },
                 success: function (data) {
                     console.log(data)
                     setCookie("userData", JSON.stringify(data), 2)

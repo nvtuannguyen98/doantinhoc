@@ -160,14 +160,25 @@ const {
 // APIs
 
 app.post('/api/sign-up', async (req, res) => {
-    const { email, name, phoneNumber, password, address } = req.body
+    const { email, name, phoneNumber, password, address, type } = req.body
 
-    // Add into database
-    const customer = await CustomerModel.create({
-        email, name, phoneNumber, password, address
-    })
+    if (type === 'customer') {
+        const customer = await CustomerModel.create({
+            email, name, phoneNumber, password, address
+        })
+        res.json(Object.assign({ type }, customer._doc))
+        return
+    }
 
-    res.json(customer)
+    if (type === 'admin') {
+        const admin = await AdminModel.create({
+            email, name, phoneNumber, password, address
+        })
+        res.json(Object.assign({ type }, admin._doc))
+        return
+    }
+
+
 })
 
 app.post('/api/employees', async (req, res) => {
@@ -220,7 +231,7 @@ app.post('/api/sign-in', async (req, res) => {
         if (admin) {
             res.json({
                 isSuccess: true,
-                user: admin,
+                user: Object.assign({ type }, admin._doc),
             })
         } else {
             res.json({
@@ -236,9 +247,10 @@ app.post('/api/sign-in', async (req, res) => {
         })
 
         if (employee) {
+            employee.set('type', type)
             res.json({
                 isSuccess: true,
-                user: employee,
+                user: Object.assign({ type }, employee._doc),
             })
         } else {
             res.json({
@@ -253,9 +265,10 @@ app.post('/api/sign-in', async (req, res) => {
             email, password,
         })
         if (customer) {
+            customer.set('type', type)
             res.json({
                 isSuccess: true,
-                user: customer,
+                user: Object.assign({ type }, customer._doc),
             })
         } else {
             res.json({
